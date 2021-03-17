@@ -1,5 +1,6 @@
 package com.dgit.demo.services;
 
+import com.dgit.demo.models.Breakdown;
 import com.dgit.demo.models.Dictionary;
 import com.dgit.demo.models.Word;
 import org.springframework.stereotype.Service;
@@ -13,26 +14,57 @@ import java.util.List;
 
 @Service
 public class BreakdownService {
-    public List<Word> readDictionary(String filename) throws IOException {
-        Dictionary dictionary;
-        List<Word> listWords = new ArrayList<Word>();
+
+    public Dictionary readDictionary(String filename) {
+        // this function will read the words of a file and add it to its own dictionary object
+
+        Dictionary dictionary = new Dictionary();
+
         // retrieve all the words in the file based dictionary
         String fileLocation = "./src/main/resources/data/" + filename + ".txt";
-        // Open the file
-        FileInputStream fstream = new FileInputStream(fileLocation);
-        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
-        String strLine;
+        try {
+            // Open the file
+            FileInputStream fstream = new FileInputStream(fileLocation);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
-        // read every line
-        while ((strLine = br.readLine()) != null)   {
-            // Print the content on the console
-            System.out.println (strLine);
+            String strLine;
+
+            // read every line
+            while ((strLine = br.readLine()) != null) {
+
+                // add each word to the dictionary
+                Word thisWord = new Word(strLine);
+                dictionary.addWord(thisWord);
+
+            }
+
+            // close input stream
+            fstream.close();
+        } catch (NullPointerException | IOException e) {
+            e.printStackTrace();
         }
 
-        // close input stream
-        fstream.close();
-
-        return listWords;
+        return dictionary;
     }
+
+    public Breakdown getBreakdownByStartingLetter(char letter, String dictionaryFile) {
+        Dictionary dictionary;
+        dictionary = readDictionary(dictionaryFile);
+
+        // retrieve list of words from the dictionary
+        List<Word> listWords = dictionary.getWordList();
+
+        Breakdown breakdownByStartingLetter = new Breakdown();
+
+        // iterate through all the words
+        for(Word word:listWords) {
+            if(word.startsWithLetter('m')) {
+                // add word to the breakdown if valid
+                breakdownByStartingLetter.addWord(word);
+            }
+        }
+        return breakdownByStartingLetter;
+    }
+
 }

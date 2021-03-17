@@ -1,6 +1,7 @@
 package com.dgit.demo.models;
 
 public class Word {
+    // Word will represent a single word
 
     private final String word;
 
