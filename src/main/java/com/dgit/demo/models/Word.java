@@ -17,7 +17,7 @@ public class Word {
         return word.charAt(0) == Character.toLowerCase(letter) || word.charAt(0) == Character.toUpperCase(letter);
     }
 
-    public int checkWordLength() {
+    public int getWordLength() {
         return word.length();
     }
 }
