@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,7 +58,7 @@ public class BreakdownService {
 
         // iterate through all the words
         for(Word word:listWords) {
-            if(word.startsWithLetter('m')) {
+            if(word.startsWithLetter(letter)) {
                 // add word to the breakdown if valid
                 breakdownByStartingLetter.addWord(word);
             }
