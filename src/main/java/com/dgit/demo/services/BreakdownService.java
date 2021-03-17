@@ -48,6 +48,7 @@ public class BreakdownService {
     }
 
     public Breakdown getBreakdownByStartingLetter(char letter, String dictionaryFile) {
+        // read in the dictionary file
         Dictionary dictionary;
         dictionary = readDictionary(dictionaryFile);
 
@@ -64,6 +65,26 @@ public class BreakdownService {
             }
         }
         return breakdownByStartingLetter;
+    }
+
+    public Breakdown getBreakDownByMoreThanNumLetters(int numLetters, String dictionaryFile) {
+        // read in the dictionary file
+        Dictionary dictionary;
+        dictionary = readDictionary(dictionaryFile);
+
+        // retrieve list of words from the dictionary
+        List<Word> listWords = dictionary.getWordList();
+
+        Breakdown breakdownByAtLeastNumLetters = new Breakdown();
+
+        // iterate through all the words
+        for(Word word:listWords) {
+            if(word.getWordLength() > numLetters) {
+                // add word to the breakdown if more than required number of characters
+                breakdownByAtLeastNumLetters.addWord(word);
+            }
+        }
+        return breakdownByAtLeastNumLetters;
     }
 
 }
